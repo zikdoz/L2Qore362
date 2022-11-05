@@ -1,13 +1,16 @@
 #include "pch/pch.h"
 
-#include "ui/form/mwloginserver.h"
+#include "app/LoginServer.h"
 
-#include <QApplication>
+#include "ui/form/mwloginserver.h"
 
 int main( int argc, char* argv[ ] )
 {
     QApplication  a( argc, argv );
     MWLoginServer w;
     w.show();
+
+    Common::Generics::initSingleton< App::LoginServer >();
+
     return a.exec();
 }

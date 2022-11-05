@@ -1,21 +1,19 @@
-#ifndef MWLOGINSERVER_H
-#define MWLOGINSERVER_H
+#pragma once
 
-#include <QMainWindow>
+namespace Ui
+{
+class MWLoginServerUI;
+}
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class MWLoginServer; }
-QT_END_NAMESPACE
-
-class MWLoginServer : public QMainWindow
+class MWLoginServer
+    : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MWLoginServer(QWidget *parent = nullptr);
+    MWLoginServer( QWidget* parent = nullptr );
     ~MWLoginServer();
 
 private:
-    Ui::MWLoginServer *ui;
+    Ui::MWLoginServerUI* ui;
 };
-#endif // MWLOGINSERVER_H

@@ -14,6 +14,12 @@ CONFIG += COMMON_LIBRARY qt thread c++17 precompile_header warn_off
 
 PRECOMPILED_HEADER  = pch/pch.h
 
+include(database/database.pri)
+include(enum/enum.pri)
+include(interface/interface.pri)
+include(type/type.pri)
+include(util/util.pri)
+
 HEADERS += \
     pch/pch.h       \
     Common_global.h \

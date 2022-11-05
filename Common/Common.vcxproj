@@ -87,11 +87,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\VS_$(ProjectName)_$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)bin\tmp\VS_$(ProjectName)_$(Configuration)-$(Platform)\</IntDir>
-    <TargetName>Common</TargetName>
+    <TargetName>Common_x64</TargetName>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <TargetName>Common</TargetName>
+    <TargetName>Common_x86</TargetName>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <OutDir>$(SolutionDir)bin\VS_$(ProjectName)_$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)bin\tmp\VS_$(ProjectName)_$(Configuration)-$(Platform)\</IntDir>
@@ -194,6 +194,7 @@
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
       <SubSystem>Windows</SubSystem>
       <SuppressStartupBanner>true</SuppressStartupBanner>
+      <ImportLibrary>$(SolutionDir)bin\VS_$(ProjectName)_$(Configuration)-$(Platform)\$(TargetName).lib</ImportLibrary>
     </Link>
     <Midl>
       <DefaultCharType>Unsigned</DefaultCharType>
@@ -240,6 +241,7 @@
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
       <SubSystem>Windows</SubSystem>
       <SuppressStartupBanner>true</SuppressStartupBanner>
+      <ImportLibrary>$(SolutionDir)bin\VS_$(ProjectName)_$(Configuration)-$(Platform)\$(TargetName).lib</ImportLibrary>
     </Link>
     <Midl>
       <DefaultCharType>Unsigned</DefaultCharType>
@@ -279,10 +281,11 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreImportLibrary>true</IgnoreImportLibrary>
       <LinkDLL>true</LinkDLL>
-      <OutputFile>$(OutDir)\Common.dll</OutputFile>
+      <OutputFile>$(OutDir)\Common_x64.dll</OutputFile>
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
       <SubSystem>Windows</SubSystem>
       <SuppressStartupBanner>true</SuppressStartupBanner>
+      <ImportLibrary>$(SolutionDir)bin\VS_$(ProjectName)_$(Configuration)-$(Platform)\$(TargetName).lib</ImportLibrary>
     </Link>
     <Midl>
       <DefaultCharType>Unsigned</DefaultCharType>
@@ -322,10 +325,11 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreImportLibrary>true</IgnoreImportLibrary>
       <LinkDLL>true</LinkDLL>
-      <OutputFile>$(OutDir)\Common.dll</OutputFile>
+      <OutputFile>$(OutDir)\Common_x86.dll</OutputFile>
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
       <SubSystem>Windows</SubSystem>
       <SuppressStartupBanner>true</SuppressStartupBanner>
+      <ImportLibrary>$(SolutionDir)bin\VS_$(ProjectName)_$(Configuration)-$(Platform)\$(TargetName).lib</ImportLibrary>
     </Link>
     <Midl>
       <DefaultCharType>Unsigned</DefaultCharType>
@@ -337,6 +341,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="database\DBFactory.cpp" />
     <ClCompile Include="pch\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -346,10 +351,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common_global.h" />
+    <QtMoc Include="database\DBFactory.h" />
+    <ClInclude Include="enum\ServerStatus.h" />
+    <ClInclude Include="interface\IInitializable.h" />
     <ClInclude Include="pch\pch.h" />
+    <ClInclude Include="util\Generics.h" />
+    <ClInclude Include="util\PlatformHelper.h" />
+    <ClInclude Include="type\TSingleton.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Common.pro" />
+    <None Include="database\database.pri" />
+    <None Include="enum\enum.pri" />
+    <None Include="interface\interface.pri" />
+    <None Include="type\type.pri" />
+    <None Include="util\util.pri" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

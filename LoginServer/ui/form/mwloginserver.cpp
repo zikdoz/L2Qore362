@@ -1,11 +1,11 @@
 #include "pch/pch.h"
 
-#include "mwloginserver.h"
+#include "ui/form/mwloginserver.h"
 #include "ui_mwloginserver.h"
 
 MWLoginServer::MWLoginServer( QWidget* parent )
     : QMainWindow( parent )
-  , ui( new Ui::MWLoginServer )
+  , ui( new Ui::MWLoginServerUI )
 {
     ui->setupUi( this );
 }

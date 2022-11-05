@@ -467,3 +467,4 @@ vcpkg*
 .qtc_clangd
 
 !tools/*
+!archive/*

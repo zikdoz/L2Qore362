@@ -22,6 +22,7 @@ CONFIG += qt thread c++17 precompile_header warn_off
 
 PRECOMPILED_HEADER  = pch/pch.h
 
+include(app/app.pri)
 include(ui/ui.pri)
 
 SOURCES += \

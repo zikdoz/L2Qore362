@@ -30,6 +30,9 @@
     <ClCompile Include="pch\pch.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="database\DBFactory.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common_global.h">
@@ -38,8 +41,33 @@
     <ClInclude Include="pch\pch.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
+    <ClInclude Include="util\PlatformHelper.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="type\TSingleton.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="enum\ServerStatus.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="interface\IInitializable.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util\Generics.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Common.pro" />
+    <None Include="type\type.pri" />
+    <None Include="util\util.pri" />
+    <None Include="enum\enum.pri" />
+    <None Include="interface\interface.pri" />
+    <None Include="database\database.pri" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="database\DBFactory.h">
+      <Filter>Generated Files</Filter>
+    </QtMoc>
   </ItemGroup>
 </Project>

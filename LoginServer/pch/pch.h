@@ -40,6 +40,27 @@
 
 #pragma region [ Qt ]
 
+#include <QApplication>
+
+#include <QFuture>
+#include <QFutureWatcher>
+
+#include <QMainWindow>
+
+#include <QObject>
+
+#include <QSqlDatabase>
+#include <QSqlDriver>
+#include <QSqlQuery>
+
+#include <QtGlobal>
+#include <QThreadPool>
+#include <QThreadStorage>
+#include <QThreadStorageData>
+#include <QtSql>
+
+#include <QUuid>
+
 #pragma endregion
 
 #pragma region [ Custom ]
@@ -47,6 +68,14 @@
 #pragma endregion
 
 #pragma region [ Library ]
+
+#include "Common_global.h"
+
+#include "interface/IInitializable.h"
+
+#include "type/TSingleton.h"
+
+#include "util/Generics.h"
 
 #pragma endregion
 

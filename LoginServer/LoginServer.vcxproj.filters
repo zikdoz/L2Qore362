@@ -46,10 +46,16 @@
     <ClCompile Include="pch\pch.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="app\LoginServer.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ui\form\mwloginserver.h">
       <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="app\LoginServer.h">
+      <Filter>Generated Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -60,6 +66,7 @@
   <ItemGroup>
     <None Include="LoginServer.pro" />
     <None Include="ui\ui.pri" />
+    <None Include="app\app.pri" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch\pch.h">
