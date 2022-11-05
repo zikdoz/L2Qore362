@@ -1,0 +1,46 @@
+name: generate_mysql_plugin
+
+on: [workflow_dispatch]
+
+jobs:
+  ci:
+    name: ${{ matrix.os.name }} Qt-${{ matrix.qt.qt_version }}
+    runs-on: ${{ matrix.os.runs-on }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - name: Windows
+            extension: "dll"
+            runs-on: windows-2019
+        qt:
+          - name: 5.12
+            qt_version: 5.12.11
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: ${{ matrix.qt.qt_version }}
+          dir: ${{ github.workspace }}/qt/
+      - name: clone qtbase
+        run: git clone -b ${{ matrix.qt.qt_version }} https://code.qt.io/qt/qtbase.git
+      - name: Compile mysql plugin on Windows
+        if: matrix.os.name == 'Windows'
+        shell: cmd
+        run: |
+          choco install wget
+          wget https://downloads.mysql.com/archives/get/p/19/file/mysql-connector-c-6.1.11-winx64.zip
+          unzip mysql-connector-c-6.1.11-winx64.zip
+          copy /y "mysql-connector-c-6.1.11-winx64\lib\libmysql.dll" .
+          call "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
+          cd qtbase/src/plugins/sqldrivers
+          qmake -- MYSQL_INCDIR="${{ github.workspace }}\mysql-connector-c-6.1.11-winx64\include" MYSQL_LIBDIR="${{ github.workspace }}\mysql-connector-c-6.1.11-winx64\lib"
+          nmake sub-mysql
+          nmake install
+      - name: upload
+        uses: actions/upload-artifact@v2
+        with:
+          path: qtbase/src/plugins/sqldrivers/plugins/sqldrivers/*.${{ matrix.os.extension }}
+          name: mysqlplugin-${{ matrix.os.name }}-Qt${{ matrix.qt.name }}
