@@ -11,13 +11,10 @@ jobs:
       matrix:
         os:
           - name: Windows
-            extension: "dll"
             runs-on: windows-2019
           - name: Linux
-            extension: "so"
             runs-on: ubuntu-20.04
           - name: MacOS
-            extension: "dylib"
             runs-on: macos-10.15
         qt:
           - name: 5.12
@@ -75,5 +72,5 @@ jobs:
       - name: upload
         uses: actions/upload-artifact@v2
         with:
-          path: qtbase/src/plugins/sqldrivers/plugins/sqldrivers/*.${{ matrix.os.extension }}
+          path: qtbase/src/plugins/sqldrivers/plugins/sqldrivers/
           name: mysqlplugin-${{ matrix.os.name }}-Qt${{ matrix.qt.name }}
