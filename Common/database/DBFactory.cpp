@@ -39,10 +39,11 @@ QSqlDatabase DBFactory::getConnection()
 
     do
     {
-        db_con.open();
-        // db_con.lastError().
-        const auto con_error = db_con.lastError();
-        const auto ccc = con_error.text();
+        if ( !db_con.open() )
+        {
+            // TODO: handle error (e.g. print text using .text() method)
+            // const auto con_error = db_con.lastError();
+        }
     }
     while ( !db_con.isOpen() );
 

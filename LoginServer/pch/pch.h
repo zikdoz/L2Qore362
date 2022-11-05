@@ -42,6 +42,7 @@
 
 #include <QApplication>
 
+#include <QFileInfo>
 #include <QFuture>
 #include <QFutureWatcher>
 
@@ -52,6 +53,8 @@
 #include <QSqlDatabase>
 #include <QSqlDriver>
 #include <QSqlQuery>
+#include <QString>
+#include <QStringList>
 
 #include <QtGlobal>
 #include <QThreadPool>
