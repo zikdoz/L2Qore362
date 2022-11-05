@@ -1,4 +1,4 @@
-name: generate_mysql_plugin
+name: generate_mysql_plugin-win
 
 on: [workflow_dispatch]
 
