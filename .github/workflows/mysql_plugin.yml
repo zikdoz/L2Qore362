@@ -75,5 +75,5 @@ jobs:
       - name: upload
         uses: actions/upload-artifact@v2
         with:
-          path: qtbase/src/plugins/sqldrivers/plugins/sqldrivers/*qsqlmysql.${{ matrix.os.extension }}
+          path: qtbase/src/plugins/sqldrivers/plugins/sqldrivers/*.${{ matrix.os.extension }}
           name: mysqlplugin-${{ matrix.os.name }}-Qt${{ matrix.qt.name }}
