@@ -4,19 +4,19 @@
 
 #include "ui/form/mwloginserver.h"
 
-#include <QDebug>
+#include "util/Logger.h"
 
-auto bk = qInstallMessageHandler( nullptr );
-
-void messageHandler( QtMsgType                 type
-                   , const QMessageLogContext& context
-                   , const QString&            msg );
-
-int main( int argc, char* argv[ ] )
+int main( int   argc
+        , char* argv[ ] )
 {
-    qInstallMessageHandler( messageHandler );
+    Common::Generics::initSingleton< Common::Logger >();
 
-    QString app_dir = QFileInfo( argv[ 0 ] ).dir().path();
+    const auto logger = Common::Logger::the().constructLogger( Common::Logger::the().constructCommonSinks() );
+    spdlog::register_logger( logger );
+
+    spdlog::set_level( spdlog::level::debug );
+
+    const QString app_dir = QFileInfo( argv[ 0 ] ).dir().path();
 
     QStringList paths = QCoreApplication::libraryPaths();
     paths.append( app_dir + "/../lib/x64" );
@@ -25,18 +25,12 @@ int main( int argc, char* argv[ ] )
     paths.append( app_dir + "/../lib/x64/sqldrivers" );
     QCoreApplication::setLibraryPaths( paths );
 
-    QApplication  a( argc, argv );
+    QApplication a( argc, argv );
+
     MWLoginServer w;
     w.show();
 
     Common::Generics::initSingleton< App::LoginServer >();
 
     return a.exec();
-}
-
-void messageHandler( QtMsgType                 type
-                   , const QMessageLogContext& context
-                   , const QString&            msg )
-{
-    ( *bk )( type, context, msg );
 }

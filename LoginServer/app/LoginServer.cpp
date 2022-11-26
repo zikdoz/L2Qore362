@@ -10,6 +10,8 @@ namespace App
 
 bool LoginServer::init()
 {
+    Common::Generics::initSingleton< Common::Database::DBFactory >();
+
     const auto con = Common::Database::DBFactory::the().getConnection();
 
     return true;

@@ -66,9 +66,14 @@
 
 #include "type/TSingleton.h"
 
+#include "util/LoggerExt.h"
+
 #pragma endregion
 
 #pragma region [ Library ]
+
+#include "spdlog/logger.h"
+#include "spdlog/spdlog.h"
 
 #pragma endregion
 

@@ -64,6 +64,7 @@
     <TargetName>Common_x64</TargetName>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
+    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
   </PropertyGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <QtInstall>Qt5 64</QtInstall>
@@ -79,6 +80,7 @@
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg">
     <VcpkgEnableManifest>true</VcpkgEnableManifest>
+    <VcpkgManifestInstall>true</VcpkgManifestInstall>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <VcpkgConfiguration>Debug</VcpkgConfiguration>
@@ -143,7 +145,7 @@
       </Command>
     </CustomBuildStep>
     <PostBuildEvent>
-      <Command>xcopy /y /d "$(ZQTMSVC64)\bin\libmysql.dll" "$(OutDir)"</Command>
+      <Command>xcopy /y /d "$(ZQTMSVC64)\bin\libmysql.dll" "$(OutDir)" &amp; xcopy /y /d "$(VcpkgInstalledDir)\$(VcpkgTriplet)\bin\*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Copying 3rd-party libs..</Message>
@@ -192,6 +194,12 @@
     <ResourceCompile>
       <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;COMMON_LIBRARY;QT_CORE_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+      <Message>
+      </Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="database\DBFactory.cpp" />
@@ -199,6 +207,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="util\Logger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common_global.h" />
@@ -207,6 +216,8 @@
     <ClInclude Include="interface\IInitializable.h" />
     <ClInclude Include="pch\pch.h" />
     <ClInclude Include="util\Generics.h" />
+    <QtMoc Include="util\Logger.h" />
+    <ClInclude Include="util\LoggerExt.h" />
     <ClInclude Include="util\PlatformHelper.h" />
     <ClInclude Include="type\TSingleton.h" />
   </ItemGroup>

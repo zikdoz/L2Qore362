@@ -33,6 +33,9 @@
     <ClCompile Include="database\DBFactory.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="util\Logger.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common_global.h">
@@ -56,6 +59,9 @@
     <ClInclude Include="util\Generics.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
+    <ClInclude Include="util\LoggerExt.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Common.pro" />
@@ -68,6 +74,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="database\DBFactory.h">
+      <Filter>Generated Files</Filter>
+    </QtMoc>
+    <QtMoc Include="util\Logger.h">
       <Filter>Generated Files</Filter>
     </QtMoc>
   </ItemGroup>

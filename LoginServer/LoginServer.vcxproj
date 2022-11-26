@@ -58,6 +58,7 @@
     <TargetName>LoginServer</TargetName>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>true</LinkIncremental>
+    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)dist\loginserver\</OutDir>
@@ -66,6 +67,8 @@
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
     <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
+    <PreBuildEventUseInBuild>false</PreBuildEventUseInBuild>
+    <PreLinkEventUseInBuild>false</PreLinkEventUseInBuild>
   </PropertyGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <QtInstall>Qt5 64</QtInstall>
@@ -80,15 +83,17 @@
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg">
     <VcpkgEnableManifest>false</VcpkgEnableManifest>
+    <VcpkgEnabled>true</VcpkgEnabled>
+    <VcpkgManifestInstall>true</VcpkgManifestInstall>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <VcpkgConfiguration>Debug</VcpkgConfiguration>
     <VcpkgTriplet>x64-windows</VcpkgTriplet>
-    <VcpkgInstalledDir>./vendor/vcpkg-x64</VcpkgInstalledDir>
+    <VcpkgInstalledDir>./../Common/vendor/vcpkg-x64</VcpkgInstalledDir>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <VcpkgTriplet>x64-windows</VcpkgTriplet>
-    <VcpkgInstalledDir>./vendor/vcpkg-x64</VcpkgInstalledDir>
+    <VcpkgInstalledDir>./../Common/vendor/vcpkg-x64</VcpkgInstalledDir>
   </PropertyGroup>
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
     <Import Project="$(QtMsBuild)\qt.props" />
@@ -222,8 +227,8 @@
       <QtUicFileName>ui_%(Filename).h</QtUicFileName>
     </QtUic>
     <PostBuildEvent>
-      <Command>xcopy /y /d "$(SolutionDir)bin\VS_Common_$(Configuration)-$(Platform)\Common*.dll" "$(OutDir)"</Command>
-      <Message>Copying common dlls..</Message>
+      <Command>xcopy /y /d "$(SolutionDir)bin\VS_Common_$(Configuration)-$(Platform)\Common*.dll" "$(OutDir)" &amp; xcopy /y /d "$(VcpkgInstalledDir)\$(VcpkgTriplet)\debug\bin\*.dll" "$(OutDir)"</Command>
+      <Message>Copying 3rd-party debug libs..</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

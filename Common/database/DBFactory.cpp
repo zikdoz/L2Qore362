@@ -2,6 +2,8 @@
 
 #include "database/DBFactory.h"
 
+#include "util/Logger.h"
+
 namespace Common::Database
 {
 #pragma region [ Define static ]
@@ -37,17 +39,22 @@ QSqlDatabase DBFactory::getConnection()
     db_con.setPassword( "" );
     db_con.setConnectOptions( "MYSQL_OPT_CONNECT_TIMEOUT=5000" );
 
+    const auto logger = Logger::the().getCommon();
+
+    logger->debug( QString( "Trying to open DB connection.." ) );
+
     // NOTE: it cant respect set timeout if DB driver is not loaded,
     //       thus it'll enter infinite do-while loop and spam like hell
     do
     {
         if ( !db_con.open() )
         {
-            // TODO: handle error (e.g. print text using .text() method)
-            // const auto con_error = db_con.lastError();
+            logger->error( "Failed to connect to the database: {0}", db_con.lastError().text() );
         }
     }
     while ( !db_con.isOpen() );
+
+    logger->info( "Connection is open!" );
 
     s_db_pool.setLocalData( db_con );
     return db_con;
