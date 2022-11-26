@@ -64,6 +64,7 @@
     <None Include="enum\enum.pri" />
     <None Include="interface\interface.pri" />
     <None Include="database\database.pri" />
+    <None Include="vcpkg.json" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="database\DBFactory.h">

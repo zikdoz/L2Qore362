@@ -1,0 +1,18 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg/master/scripts/vcpkg.schema.json",
+  "name": "commom-lib",
+  "version": "1.0.0",
+  "dependencies": [
+    {
+      "name": "spdlog",
+      "default-features": false,
+      "version>=": "1.11.0"
+    },
+    {
+      "name": "yaml-cpp",
+      "default-features": false,
+      "version>=": "0.7.0#1"
+    }
+  ],
+  "builtin-baseline": "62d01b70df227850b728f5050418b917ad6d2b32"
+}
