@@ -37,6 +37,8 @@ QSqlDatabase DBFactory::getConnection()
     db_con.setPassword( "" );
     db_con.setConnectOptions( "MYSQL_OPT_CONNECT_TIMEOUT=5000" );
 
+    // NOTE: it cant respect set timeout if DB driver is not loaded,
+    //       thus it'll enter infinite do-while loop and spam like hell
     do
     {
         if ( !db_con.open() )
