@@ -11,10 +11,20 @@ int main( int   argc
 {
     Common::Generics::initSingleton< Common::Logger >();
 
-    const auto logger = Common::Logger::the().constructLogger( Common::Logger::the().constructCommonSinks() );
+    const auto logger = Common::Logger::the().constructCommonLogger();
     spdlog::register_logger( logger );
 
-    spdlog::set_level( spdlog::level::debug );
+#ifdef LQ_DEBUG
+    spdlog::set_level( spdlog::level::trace );
+#else
+    spdlog::set_level( spdlog::level::info );
+#endif
+
+    spdlog::flush_on( spdlog::level::err );
+    logger->flush_on( spdlog::level::err );
+
+    logger->sinks()[ 0 ]->set_pattern( "[%H:%M:%S.%e][ %=9l ][%n] %v" );          // console
+    logger->sinks()[ 1 ]->set_pattern( "[%C/%m/%d %H:%M:%S.%e][ %=9l ][%n] %v" ); // file
 
     const QString app_dir = QFileInfo( argv[ 0 ] ).dir().path();
 

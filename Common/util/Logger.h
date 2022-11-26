@@ -4,7 +4,7 @@ namespace Common
 {
 namespace Logging
 {
-static const std::string log_common = "log_common";
+static const std::string log_common = "common";
 }
 
 class COMMON_EXPORT Logger
@@ -40,6 +40,8 @@ public:
     std::vector< spdlog::sink_ptr > constructCommonSinks();
 
     std::shared_ptr< spdlog::logger > constructLogger( std::vector< spdlog::sink_ptr > sinks );
+
+    std::shared_ptr< spdlog::logger > constructCommonLogger();
 
 #pragma endregion
 

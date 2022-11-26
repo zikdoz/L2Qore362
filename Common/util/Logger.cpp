@@ -2,7 +2,7 @@
 
 #include "util/Logger.h"
 
-#include "spdlog/sinks/basic_file_sink.h"
+#include "spdlog/sinks/rotating_file_sink.h"
 #include "spdlog/sinks/msvc_sink.h"
 #include "spdlog/sinks/stdout_sinks.h"
 
@@ -12,9 +12,7 @@ namespace Common
 
 bool Logger::init()
 {
-    _common_logger = constructLogger( constructCommonSinks() );
-
-    _common_logger->debug( "test-test-test" );
+    _common_logger = constructCommonLogger();
 
     return true;
 }
@@ -33,9 +31,9 @@ std::vector< spdlog::sink_ptr > Logger::constructCommonSinks()
         std::make_shared< spdlog::sinks::stdout_sink_mt >()
 #endif
 #ifdef LQ_RELEASE
-      , std::make_shared< spdlog::sinks::basic_file_sink_mt >( "../../loginserver/log/test.log", true )
+      , std::make_shared< spdlog::sinks::rotating_file_sink_mt >( "../../loginserver/log/main.log", 1024 * 1024 * 10, 5, true )
 #else
-      , std::make_shared< spdlog::sinks::basic_file_sink_mt >( "log/test.log", true )
+      , std::make_shared< spdlog::sinks::rotating_file_sink_mt >( "log/main.log", 1024 * 1024 * 10, 5, true )
 #endif
     };
 
@@ -60,6 +58,11 @@ std::shared_ptr< spdlog::logger > Logger::constructLogger( std::vector< spdlog::
     }
 
     return logger;
+}
+
+std::shared_ptr< spdlog::logger > Logger::constructCommonLogger()
+{
+    return constructLogger( constructCommonSinks() );
 }
 
 #pragma endregion
