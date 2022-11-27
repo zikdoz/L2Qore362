@@ -2,10 +2,9 @@
 
 namespace Common
 {
-namespace Logging
-{
-static const std::string log_common = "common";
-}
+#ifndef CM_LOG
+#   define CM_LOG Common::Logger::the()
+#endif
 
 class COMMON_EXPORT Logger
     : public QObject
@@ -13,9 +12,6 @@ class COMMON_EXPORT Logger
     , public Common::Interface::IInitializable
 {
     Q_OBJECT
-
-private:
-    std::shared_ptr< spdlog::logger > _common_logger;
 
 #pragma region [ C/D-tor ]
 
@@ -37,18 +33,12 @@ public:
 #pragma region [ Utility ]
 
 public:
-    std::vector< spdlog::sink_ptr > constructCommonSinks();
+    std::shared_ptr< spdlog::logger > setupRoot();
 
-    std::shared_ptr< spdlog::logger > constructLogger( std::vector< spdlog::sink_ptr > sinks );
+    std::shared_ptr< spdlog::logger > get( const std::string& logger_name );
 
-    std::shared_ptr< spdlog::logger > constructCommonLogger();
-
-#pragma endregion
-
-#pragma region [ Accessor ]
-
-public:
-    std::shared_ptr< spdlog::logger > getCommon();
+private:
+    const std::vector< spdlog::sink_ptr >& setupCommonSinks();
 
 #pragma endregion
 };

@@ -39,7 +39,7 @@ QSqlDatabase DBFactory::getConnection()
     db_con.setPassword( "" );
     db_con.setConnectOptions( "MYSQL_OPT_CONNECT_TIMEOUT=5000" );
 
-    const auto logger = Logger::the().getCommon();
+    const auto logger = CM_LOG.get( "db" );
 
     logger->debug( QString( "Trying to open DB connection.." ) );
 

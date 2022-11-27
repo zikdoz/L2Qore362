@@ -2,9 +2,10 @@
 
 #include "util/Logger.h"
 
-#include "spdlog/sinks/rotating_file_sink.h"
-#include "spdlog/sinks/msvc_sink.h"
-#include "spdlog/sinks/stdout_sinks.h"
+namespace
+{
+const std::string root_logger_name = "root";
+}
 
 namespace Common
 {
@@ -12,7 +13,7 @@ namespace Common
 
 bool Logger::init()
 {
-    _common_logger = constructCommonLogger();
+    setupRoot();
 
     return true;
 }
@@ -21,37 +22,20 @@ bool Logger::init()
 
 #pragma region [ Utility ]
 
-std::vector< spdlog::sink_ptr > Logger::constructCommonSinks()
+std::shared_ptr< spdlog::logger > Logger::setupRoot()
 {
-    const static std::vector< spdlog::sink_ptr > common_sinks
-    {
-#ifdef Q_OS_WIN
-        std::make_shared< spdlog::sinks::msvc_sink_mt >()
-#else
-        std::make_shared< spdlog::sinks::stdout_sink_mt >()
-#endif
-#ifdef LQ_RELEASE
-      , std::make_shared< spdlog::sinks::rotating_file_sink_mt >( "../../loginserver/log/main.log", 1024 * 1024 * 10, 5, true )
-#else
-      , std::make_shared< spdlog::sinks::rotating_file_sink_mt >( "log/main.log", 1024 * 1024 * 10, 5, true )
-#endif
-    };
+    const auto& sinks = setupCommonSinks();
 
-    return common_sinks;
-}
-
-std::shared_ptr< spdlog::logger > Logger::constructLogger( std::vector< spdlog::sink_ptr > sinks )
-{
-    auto logger = spdlog::get( Logging::log_common );
+    auto logger = spdlog::get( root_logger_name );
 
     if ( !logger )
     {
         if ( sinks.empty() )
         {
-            return spdlog::stdout_logger_mt( Logging::log_common );
+            return spdlog::stdout_logger_mt( root_logger_name );
         }
 
-        logger = std::make_shared< spdlog::logger >( Logging::log_common,
+        logger = std::make_shared< spdlog::logger >( root_logger_name,
                                                      std::begin( sinks ),
                                                      std::end( sinks ) );
         spdlog::register_logger( logger );
@@ -60,19 +44,39 @@ std::shared_ptr< spdlog::logger > Logger::constructLogger( std::vector< spdlog::
     return logger;
 }
 
-std::shared_ptr< spdlog::logger > Logger::constructCommonLogger()
+std::shared_ptr< spdlog::logger > Logger::get( const std::string& logger_name )
 {
-    return constructLogger( constructCommonSinks() );
+    auto logger = spdlog::get( logger_name );
+
+    if ( !logger )
+    {
+        const auto root_logger = spdlog::get( root_logger_name );
+        logger = root_logger->clone( logger_name );
+
+        spdlog::register_logger( logger );
+    }
+
+    return logger;
+}
+
+#pragma region [ Private ]
+
+const std::vector< spdlog::sink_ptr >& Logger::setupCommonSinks()
+{
+    const static std::vector< spdlog::sink_ptr > common_sinks
+    {
+        std::make_shared< spdlog::sinks::stdout_sink_mt >()
+#ifdef CM_RELEASE
+      , std::make_shared< spdlog::sinks::rotating_file_sink_mt >( "../../loginserver/log/output.log", 1024 * 1024 * 10, 5, true )
+#else
+      , std::make_shared< spdlog::sinks::rotating_file_sink_mt >( "log/output.log", 1024 * 1024 * 10, 5, true )
+#endif
+    };
+
+    return common_sinks;
 }
 
 #pragma endregion
-
-#pragma region [ Accessor ]
-
-std::shared_ptr< spdlog::logger > Logger::getCommon()
-{
-    return _common_logger;
-}
 
 #pragma endregion
 }
